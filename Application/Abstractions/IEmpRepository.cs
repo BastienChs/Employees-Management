@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.Abstractions
 {
-    public interface IEmployeeRepository
+    public interface IEmpRepository
     {
         Task<List<Employee>> GetEmployeesAsync();
         Task<Employee> GetEmployeeAsync(int id);

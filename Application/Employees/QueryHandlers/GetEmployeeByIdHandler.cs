@@ -12,8 +12,8 @@ namespace Application.Employees.QueryHandlers
 {
     public class GetEmployeeByIdHandler : IRequestHandler<GetEmployeeById, Employee>
     {
-        private readonly IEmployeeRepository _employeeRepository;
-        public GetEmployeeByIdHandler(IEmployeeRepository employeeRepository)
+        private readonly IEmpRepository _employeeRepository;
+        public GetEmployeeByIdHandler(IEmpRepository employeeRepository)
         {
             _employeeRepository = employeeRepository;
         }

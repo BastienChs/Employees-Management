@@ -12,8 +12,8 @@ namespace Application.Employees.QueryHandlers
 {
     public class GetAllEmployeesHandler : IRequestHandler<GetAllEmployees, List<Employee>>
     {
-        private readonly IEmployeeRepository _employeeRepository;
-        public GetAllEmployeesHandler(IEmployeeRepository employeeRepository)
+        private readonly IEmpRepository _employeeRepository;
+        public GetAllEmployeesHandler(IEmpRepository employeeRepository)
         {
             _employeeRepository = employeeRepository;
         }

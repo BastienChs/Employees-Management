@@ -12,8 +12,8 @@ namespace Application.Employees.CommandHandlers
 {
     public class AddEmployeeHandler : IRequestHandler<AddEmployee, Employee>
     {
-        private readonly IEmployeeRepository _employeeRepository;
-        public AddEmployeeHandler(IEmployeeRepository employeeRepository)
+        private readonly IEmpRepository _employeeRepository;
+        public AddEmployeeHandler(IEmpRepository employeeRepository)
         {
             _employeeRepository = employeeRepository;
         }

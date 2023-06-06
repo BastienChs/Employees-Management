@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories
 {
-    public class EmployeeRepository : IEmployeeRepository
+    public class EmpRepository : IEmpRepository
     {
         private readonly EntrepriseDatabaseSettings _dbSettings;
         private readonly MySqlConnection _db;
-        public EmployeeRepository(IOptions<EntrepriseDatabaseSettings> dbSettings)
+        public EmpRepository(IOptions<EntrepriseDatabaseSettings> dbSettings)
         {
             _dbSettings = dbSettings.Value;
             _db = new MySqlConnection(_dbSettings.ConnectionString);

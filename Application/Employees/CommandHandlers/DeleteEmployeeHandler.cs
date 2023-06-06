@@ -12,8 +12,8 @@ namespace Application.Employees.CommandHandlers
 {
     public class DeleteEmployeeHandler : IRequestHandler<DeleteEmployee, Employee>
     {
-        private readonly IEmployeeRepository _employeeRepository;
-        public DeleteEmployeeHandler(IEmployeeRepository employeeRepository)
+        private readonly IEmpRepository _employeeRepository;
+        public DeleteEmployeeHandler(IEmpRepository employeeRepository)
         {
             _employeeRepository = employeeRepository;
         }

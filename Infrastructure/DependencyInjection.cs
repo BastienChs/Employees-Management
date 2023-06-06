@@ -13,7 +13,8 @@ namespace Infrastructure
             ConfigurationManager configuration)
         {
             services.Configure<EntrepriseDatabaseSettings>(configuration.GetSection(EntrepriseDatabaseSettings.SectionName));
-            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            services.AddScoped<IEmpRepository, EmpRepository>();
+            services.AddScoped<IDeptRepository, DeptRepository>();
             return services;
         }
     }

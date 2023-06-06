@@ -17,6 +17,8 @@ namespace webapi.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public async Task<IActionResult> Get()
         {
             List<EmployeeWithManager> employeesWithManagers = new List<EmployeeWithManager>();
