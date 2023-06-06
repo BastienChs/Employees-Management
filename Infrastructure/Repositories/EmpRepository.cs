@@ -23,11 +23,20 @@ namespace Infrastructure.Repositories
 
         public Task<Employee> AddEmployeeAsync(Employee employee)
         {
-            return null;
-            //_db.Open();
-            //_context.Employees.Add(employee);
-            //_context.SaveChanges();
-            //return Task.FromResult(employee);
+            
+            _db.Open();
+            var cmd = _db.CreateCommand();
+            cmd.CommandText = "INSERT INTO emp (ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO) VALUES (@name, @job, @managerId, @hireDate, @salary, @commission, @departmentId)";
+            cmd.Parameters.AddWithValue("@name", employee.Name);
+            cmd.Parameters.AddWithValue("@job", employee.JobTitle);
+            cmd.Parameters.AddWithValue("@managerId", employee.ManagerId);
+            cmd.Parameters.AddWithValue("@hireDate", employee.HireDate);
+            cmd.Parameters.AddWithValue("@salary", employee.Salary);
+            cmd.Parameters.AddWithValue("@commission", employee.Commission);
+            cmd.Parameters.AddWithValue("@departmentId", employee.DepartmentId);
+            cmd.ExecuteNonQuery();
+            _db.Close();
+            return Task.FromResult(employee);
         }
 
         public Task<Employee> DeleteEmployeeAsync(int id)
@@ -100,18 +109,20 @@ namespace Infrastructure.Repositories
 
         public Task<Employee> UpdateEmployeeAsync(Employee employee)
         {
-            return null;
-            //var employeeToUpdate = _context.Employees.Find(employee.Id);
-            //if(employeeToUpdate == null)
-            //{
-            //    return null;
-            //}
-            //else
-            //{
-            //    employeeToUpdate = employee;
-            //    _context.SaveChanges();
-            //    return Task.FromResult(employeeToUpdate);
-            //}
+            _db.Open();
+            var cmd = _db.CreateCommand();
+            cmd.CommandText = "UPDATE emp SET ENAME = @name, JOB = @job, MGR = @managerId, HIREDATE = @hireDate, SAL = @salary, COMM = @commission, DEPTNO = @departmentId WHERE EMPNO = @id";
+            cmd.Parameters.AddWithValue("@id", employee.Id);
+            cmd.Parameters.AddWithValue("@name", employee.Name);
+            cmd.Parameters.AddWithValue("@job", employee.JobTitle);
+            cmd.Parameters.AddWithValue("@managerId", employee.ManagerId);
+            cmd.Parameters.AddWithValue("@hireDate", employee.HireDate);
+            cmd.Parameters.AddWithValue("@salary", employee.Salary);
+            cmd.Parameters.AddWithValue("@commission", employee.Commission);
+            cmd.Parameters.AddWithValue("@departmentId", employee.DepartmentId);
+            cmd.ExecuteNonQuery();
+            _db.Close();
+            return Task.FromResult(employee);
         }
     }
 }

@@ -20,17 +20,7 @@ namespace Application.Employees.CommandHandlers
 
         public Task<Employee> Handle(AddEmployee request, CancellationToken cancellationToken)
         {
-            var newEmployee = new Employee
-            {
-                Name = request.Name,
-                JobTitle = request.JobTitle,
-                ManagerId = request.ManagerId,
-                HireDate = request.HireDate,
-                Salary = request.Salary,
-                Commission = request.Commission,
-                DepartmentId = request.DepartmentId
-            };
-            return _employeeRepository.AddEmployeeAsync(newEmployee);
+            return _employeeRepository.AddEmployeeAsync(request.employee);
         }
     }
 }

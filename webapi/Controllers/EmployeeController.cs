@@ -1,4 +1,6 @@
-﻿using Application.Employees.Queries;
+﻿using Application.Employees.Commands;
+using Application.Employees.Queries;
+using Domain.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using webapi.Extensions;
@@ -48,6 +50,27 @@ namespace webapi.Controllers
             var result = await _mediator.Send(command);
             return Ok(result);
         }
-        
+
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        [HttpPatch]
+        public async Task<IActionResult> Patch([FromBody] Employee employee)
+        {
+            var command = new UpdateEmployee();
+            command.employee = employee;
+            var result = await _mediator.Send(command);
+            return CreatedAtAction(nameof(Patch), new { id = result.Id }, result);
+        }
+
+        [ProducesResponseType(201)]
+        [ProducesResponseType(404)]
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody] NewEmployee employee)
+        {
+            var command = new AddEmployee();
+            command.employee = employee;
+            var result = await _mediator.Send(command);
+            return CreatedAtAction(nameof(Post), new { id = result.Id }, result);
+        }
     }
 }
