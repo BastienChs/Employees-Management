@@ -21,28 +21,39 @@ namespace webapi.Controllers
         [HttpGet]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
         public async Task<IActionResult> Get()
         {
-            List<EmployeeWithManager> employeesWithManagers = new List<EmployeeWithManager>();
-            //We want to retrieve all employees and the manager of each employee
-            var employees = await _mediator.Send(new GetAllEmployees());
-            foreach(var employee in employees)
+            try
             {
-                EmployeeWithManager employeeWithManager = new EmployeeWithManager();
-                employeeWithManager = EmployeeExtensions.ToEmployeeWithManager(employee);
-
-                if (employeeWithManager.ManagerId.HasValue)
+                List<EmployeeWithManager> employeesWithManagers = new List<EmployeeWithManager>();
+                //We want to retrieve all employees and the manager of each employee
+                var employees = await _mediator.Send(new GetAllEmployees());
+                foreach (var employee in employees)
                 {
-                    var manager = await _mediator.Send(new GetEmployeeById() { Id = employeeWithManager.ManagerId.Value });
-                    employeeWithManager.Manager = manager;
-                }
-                employeesWithManagers.Add(employeeWithManager);
-            }
+                    EmployeeWithManager employeeWithManager = new EmployeeWithManager();
+                    employeeWithManager = EmployeeExtensions.ToEmployeeWithManager(employee);
 
-            return Ok(employeesWithManagers);
+                    if (employeeWithManager.ManagerId.HasValue)
+                    {
+                        var manager = await _mediator.Send(new GetEmployeeById() { Id = employeeWithManager.ManagerId.Value });
+                        employeeWithManager.Manager = manager;
+                    }
+                    employeesWithManagers.Add(employeeWithManager);
+                }
+
+                return Ok(employeesWithManagers);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
         public async Task<IActionResult> Get(int id)
         {
             var command = new GetEmployeeById();
@@ -53,6 +64,7 @@ namespace webapi.Controllers
 
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
         [HttpPatch]
         public async Task<IActionResult> Patch([FromBody] Employee employee)
         {
@@ -64,6 +76,7 @@ namespace webapi.Controllers
 
         [ProducesResponseType(201)]
         [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] NewEmployee employee)
         {
