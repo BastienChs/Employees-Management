@@ -56,10 +56,19 @@ namespace webapi.Controllers
         [ProducesResponseType(500)]
         public async Task<IActionResult> Get(int id)
         {
-            var command = new GetEmployeeById();
-            command.Id = id;
-            var result = await _mediator.Send(command);
-            return Ok(result);
+            try
+            {
+                var command = new GetEmployeeById();
+                command.Id = id;
+                var result = await _mediator.Send(command);
+                if (result == null)
+                    return NotFound("Employee not found");
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [ProducesResponseType(200)]
@@ -68,10 +77,21 @@ namespace webapi.Controllers
         [HttpPatch]
         public async Task<IActionResult> Patch([FromBody] Employee employee)
         {
-            var command = new UpdateEmployee();
-            command.employee = employee;
-            var result = await _mediator.Send(command);
-            return CreatedAtAction(nameof(Patch), new { id = result.Id }, result);
+            try
+            {
+                if (employee == null)
+                    return BadRequest("Employee is null");
+                var command = new UpdateEmployee();
+                command.employee = employee;
+                var result = await _mediator.Send(command);
+                if (result == null)
+                    return NotFound("Employee not found");
+                return CreatedAtAction(nameof(Patch), new { id = result.Id }, result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [ProducesResponseType(201)]
@@ -80,10 +100,20 @@ namespace webapi.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] NewEmployee employee)
         {
-            var command = new AddEmployee();
-            command.employee = employee;
-            var result = await _mediator.Send(command);
-            return CreatedAtAction(nameof(Post), new { id = result.Id }, result);
+            try
+            {
+                if (employee == null)
+                    return BadRequest("Employee is null");
+
+                var command = new AddEmployee();
+                command.employee = employee;
+                var result = await _mediator.Send(command);
+                return CreatedAtAction(nameof(Post), new { id = result.Id }, result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
     }
 }

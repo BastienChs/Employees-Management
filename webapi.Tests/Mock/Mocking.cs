@@ -1,4 +1,5 @@
 ﻿using Domain.Models;
+using webapi.Models;
 
 namespace webapi.Tests.Mock
 {
@@ -29,6 +30,20 @@ namespace webapi.Tests.Mock
                     DepartmentId = 10,
                     HireDate = DateTime.Parse("17-DEC-1975")
                 }
+            };
+        }
+        
+        public static NewEmployee GetNewEmployee()
+        {
+            return new NewEmployee()
+            {
+                Name = "Doe",
+                ManagerId = 7850,
+                JobTitle = "MANAGER",
+                Salary = 3000,
+                Commission = null,
+                DepartmentId = 10,
+                HireDate = DateTime.Parse("17-DEC-1980")
             };
         }
     }
