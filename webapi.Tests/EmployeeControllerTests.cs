@@ -28,11 +28,11 @@ namespace webapi.Tests
             //We want to mock a list of employee
             var mockMediator = new Mock<IMediator>();
             mockMediator.Setup(m => m.Send(It.IsAny<GetAllEmployees>(), default(CancellationToken)))
-                .ReturnsAsync(Mocking.GetEmployees());
+                .ReturnsAsync(EmployeeMocks.GetEmployees());
 
             //We want to mock the GetEmployeeById
             mockMediator.Setup(mockMediator => mockMediator.Send(It.IsAny<GetEmployeeById>(), default(CancellationToken)))
-                .ReturnsAsync(Mocking.GetEmployees()[1]);
+                .ReturnsAsync(EmployeeMocks.GetEmployees()[1]);
 
             var controller = new EmployeeController(mockMediator.Object);
 
@@ -49,18 +49,18 @@ namespace webapi.Tests
         }
 
         [Test]
-        public void Get_Should_Return_A_List_Of_Employees_With_A_Manager ()
+        public void Get_Should_Return_A_List_Of_Employees_With_A_Manager()
         {
             //Arrange
 
             //We want to mock a list of employee
             var mockMediator = new Mock<IMediator>();
             mockMediator.Setup(m => m.Send(It.IsAny<GetAllEmployees>(), default(CancellationToken)))
-                .ReturnsAsync(Mocking.GetEmployees());
+                .ReturnsAsync(EmployeeMocks.GetEmployees());
 
             //We want to mock the GetEmployeeById
             mockMediator.Setup(mockMediator => mockMediator.Send(It.IsAny<GetEmployeeById>(), default(CancellationToken)))
-                .ReturnsAsync(Mocking.GetEmployees()[1]);
+                .ReturnsAsync(EmployeeMocks.GetEmployees()[1]);
 
             var controller = new EmployeeController(mockMediator.Object);
 
@@ -78,19 +78,19 @@ namespace webapi.Tests
             {
 
                 //We should retrieve mostly the same values as the mocked list, except for the new propert Manager
-                Assert.That(Mocking.GetEmployees()[0].Id, Is.EqualTo(employees[0].Id));
-                Assert.That(Mocking.GetEmployees()[0].Name, Is.EqualTo(employees[0].Name));
-                Assert.That(Mocking.GetEmployees()[0].JobTitle, Is.EqualTo(employees[0].JobTitle));
-                Assert.That(Mocking.GetEmployees()[0].ManagerId, Is.EqualTo(employees[0].ManagerId));
-                Assert.That(Mocking.GetEmployees()[0].HireDate, Is.EqualTo(employees[0].HireDate));
-                Assert.That(Mocking.GetEmployees()[0].Salary, Is.EqualTo(employees[0].Salary));
-                Assert.That(Mocking.GetEmployees()[0].Commission, Is.EqualTo(employees[0].Commission));
-                Assert.That(Mocking.GetEmployees()[0].DepartmentId, Is.EqualTo(employees[0].DepartmentId));
+                Assert.That(EmployeeMocks.GetEmployees()[0].Id, Is.EqualTo(employees[0].Id));
+                Assert.That(EmployeeMocks.GetEmployees()[0].Name, Is.EqualTo(employees[0].Name));
+                Assert.That(EmployeeMocks.GetEmployees()[0].JobTitle, Is.EqualTo(employees[0].JobTitle));
+                Assert.That(EmployeeMocks.GetEmployees()[0].ManagerId, Is.EqualTo(employees[0].ManagerId));
+                Assert.That(EmployeeMocks.GetEmployees()[0].HireDate, Is.EqualTo(employees[0].HireDate));
+                Assert.That(EmployeeMocks.GetEmployees()[0].Salary, Is.EqualTo(employees[0].Salary));
+                Assert.That(EmployeeMocks.GetEmployees()[0].Commission, Is.EqualTo(employees[0].Commission));
+                Assert.That(EmployeeMocks.GetEmployees()[0].DepartmentId, Is.EqualTo(employees[0].DepartmentId));
             });
 
             //We should have a manager which is the second employee of the mocked list
             Assert.That(employees[0].Manager, Is.Not.Null);
-            Assert.That(CustomMockExtensions.Equals(employees[0].Manager, Mocking.GetEmployees()[1]), Is.EqualTo(true));
+            Assert.That(CustomMockExtensions.Equals(employees[0].Manager, EmployeeMocks.GetEmployees()[1]), Is.EqualTo(true));
         }
 
         [Test]
@@ -101,11 +101,11 @@ namespace webapi.Tests
             //We want to mock a list of employee
             var mockMediator = new Mock<IMediator>();
             mockMediator.Setup(m => m.Send(It.IsAny<GetAllEmployees>(), default(CancellationToken)))
-                .ReturnsAsync(Mocking.GetEmployees());
+                .ReturnsAsync(EmployeeMocks.GetEmployees());
 
             //We want to mock the GetEmployeeById
             mockMediator.Setup(mockMediator => mockMediator.Send(It.IsAny<GetEmployeeById>(), default(CancellationToken)))
-                .ReturnsAsync(Mocking.GetEmployees()[1]);
+                .ReturnsAsync(EmployeeMocks.GetEmployees()[1]);
 
             var controller = new EmployeeController(mockMediator.Object);
 
@@ -123,14 +123,14 @@ namespace webapi.Tests
             {
 
                 //We should retrieve mostly the same values as the mocked list, except for the new propert Manager
-                Assert.That(Mocking.GetEmployees()[1].Id, Is.EqualTo(employees[1].Id));
-                Assert.That(Mocking.GetEmployees()[1].Name, Is.EqualTo(employees[1].Name));
-                Assert.That(Mocking.GetEmployees()[1].JobTitle, Is.EqualTo(employees[1].JobTitle));
+                Assert.That(EmployeeMocks.GetEmployees()[1].Id, Is.EqualTo(employees[1].Id));
+                Assert.That(EmployeeMocks.GetEmployees()[1].Name, Is.EqualTo(employees[1].Name));
+                Assert.That(EmployeeMocks.GetEmployees()[1].JobTitle, Is.EqualTo(employees[1].JobTitle));
                 Assert.That(employees[1].ManagerId, Is.Null);
-                Assert.That(Mocking.GetEmployees()[1].HireDate, Is.EqualTo(employees[1].HireDate));
-                Assert.That(Mocking.GetEmployees()[1].Salary, Is.EqualTo(employees[1].Salary));
-                Assert.That(Mocking.GetEmployees()[1].Commission, Is.EqualTo(employees[1].Commission));
-                Assert.That(Mocking.GetEmployees()[1].DepartmentId, Is.EqualTo(employees[1].DepartmentId));
+                Assert.That(EmployeeMocks.GetEmployees()[1].HireDate, Is.EqualTo(employees[1].HireDate));
+                Assert.That(EmployeeMocks.GetEmployees()[1].Salary, Is.EqualTo(employees[1].Salary));
+                Assert.That(EmployeeMocks.GetEmployees()[1].Commission, Is.EqualTo(employees[1].Commission));
+                Assert.That(EmployeeMocks.GetEmployees()[1].DepartmentId, Is.EqualTo(employees[1].DepartmentId));
                 //We should have a manager which is the second employee of the mocked list
                 Assert.That(employees[1].Manager, Is.Null);
             });
@@ -140,9 +140,10 @@ namespace webapi.Tests
         //We have to test the case when an exception is raised
         public void Get_Should_Return_An_Internal_Error_When_Exception_Raised()
         {
+            Exception exception = new Exception("An error occured while retrieving the employees");
             var mockMediator = new Mock<IMediator>();
             mockMediator.Setup(m => m.Send(It.IsAny<GetAllEmployees>(), default(CancellationToken)))
-                .Throws(new Exception("An exception has been raised"));
+                .Throws(exception);
 
             var controller = new EmployeeController(mockMediator.Object);
 
@@ -156,6 +157,7 @@ namespace webapi.Tests
             Assert.That(returnedTask.Result, Is.InstanceOf<ObjectResult>());
             var returnedResult = returnedTask.Result as ObjectResult;
             Assert.That(returnedResult.StatusCode, Is.EqualTo(500));
+            Assert.That(returnedResult.Value, Is.EqualTo(exception.Message));
         }
 
         //TODO: Test cases for Get(int id)
@@ -169,7 +171,7 @@ namespace webapi.Tests
             //Arrange
             var mockMediator = new Mock<IMediator>();
             mockMediator.Setup(m => m.Send(It.IsAny<GetEmployeeById>(), default(CancellationToken)))
-                .ReturnsAsync(Mocking.GetEmployees()[0]);
+                .ReturnsAsync(EmployeeMocks.GetEmployees()[0]);
             var controller = new EmployeeController(mockMediator.Object);
             
             //Act
@@ -186,14 +188,14 @@ namespace webapi.Tests
             Assert.Multiple(() =>
             {
                 Assert.That(employee, Is.Not.Null);
-                Assert.That(Mocking.GetEmployees()[0].Id, Is.EqualTo(employee.Id));
-                Assert.That(Mocking.GetEmployees()[0].Name, Is.EqualTo(employee.Name));
-                Assert.That(Mocking.GetEmployees()[0].JobTitle, Is.EqualTo(employee.JobTitle));
-                Assert.That(Mocking.GetEmployees()[0].ManagerId, Is.EqualTo(employee.ManagerId));
-                Assert.That(Mocking.GetEmployees()[0].HireDate, Is.EqualTo(employee.HireDate));
-                Assert.That(Mocking.GetEmployees()[0].Salary, Is.EqualTo(employee.Salary));
-                Assert.That(Mocking.GetEmployees()[0].Commission, Is.EqualTo(employee.Commission));
-                Assert.That(Mocking.GetEmployees()[0].DepartmentId, Is.EqualTo(employee.DepartmentId));
+                Assert.That(EmployeeMocks.GetEmployees()[0].Id, Is.EqualTo(employee.Id));
+                Assert.That(EmployeeMocks.GetEmployees()[0].Name, Is.EqualTo(employee.Name));
+                Assert.That(EmployeeMocks.GetEmployees()[0].JobTitle, Is.EqualTo(employee.JobTitle));
+                Assert.That(EmployeeMocks.GetEmployees()[0].ManagerId, Is.EqualTo(employee.ManagerId));
+                Assert.That(EmployeeMocks.GetEmployees()[0].HireDate, Is.EqualTo(employee.HireDate));
+                Assert.That(EmployeeMocks.GetEmployees()[0].Salary, Is.EqualTo(employee.Salary));
+                Assert.That(EmployeeMocks.GetEmployees()[0].Commission, Is.EqualTo(employee.Commission));
+                Assert.That(EmployeeMocks.GetEmployees()[0].DepartmentId, Is.EqualTo(employee.DepartmentId));
             });
         }
 
@@ -221,9 +223,10 @@ namespace webapi.Tests
         public void GetById_Should_Return_Internal_Error_When_Exception_Raised()
         {
             //Arrange
+            Exception exception = new Exception("An error occured while retrieving the employee");
             var mockMediator = new Mock<IMediator>();
             mockMediator.Setup(m => m.Send(It.IsAny<GetEmployeeById>(), default(CancellationToken)))
-                .Throws(new Exception("An exception has been raised"));
+                .Throws(exception);
             var controller = new EmployeeController(mockMediator.Object);
 
             //Act
@@ -236,6 +239,7 @@ namespace webapi.Tests
             Assert.That(returnedTask.Result, Is.InstanceOf<ObjectResult>());
             var returnedResult = returnedTask.Result as ObjectResult;
             Assert.That(returnedResult.StatusCode, Is.EqualTo(500));
+            Assert.That(returnedResult.Value, Is.EqualTo(exception.Message));
         }
 
         //TODO: Test cases for Post(Employee employee)
@@ -248,11 +252,11 @@ namespace webapi.Tests
             //Arrange
             var mockMediator = new Mock<IMediator>();
             mockMediator.Setup(m => m.Send(It.IsAny<AddEmployee>(), default(CancellationToken)))
-                .ReturnsAsync(Mocking.GetEmployees()[0]);
+                .ReturnsAsync(EmployeeMocks.GetEmployees()[0]);
             var controller = new EmployeeController(mockMediator.Object);
 
             //Act
-            var result = controller.Post(Mocking.GetNewEmployee());
+            var result = controller.Post(EmployeeMocks.GetNewEmployee());
 
             //Assert
             Assert.That(result, Is.Not.Null);
@@ -266,13 +270,13 @@ namespace webapi.Tests
             {
                 Assert.That(employee, Is.Not.Null);
                 //We should not check the Id because it is generated by the database
-                Assert.That(Mocking.GetNewEmployee().Name, Is.EqualTo(employee.Name));
-                Assert.That(Mocking.GetNewEmployee().JobTitle, Is.EqualTo(employee.JobTitle));
-                Assert.That(Mocking.GetNewEmployee().ManagerId, Is.EqualTo(employee.ManagerId));
-                Assert.That(Mocking.GetNewEmployee().HireDate, Is.EqualTo(employee.HireDate));
-                Assert.That(Mocking.GetNewEmployee().Salary, Is.EqualTo(employee.Salary));
-                Assert.That(Mocking.GetNewEmployee().Commission, Is.EqualTo(employee.Commission));
-                Assert.That(Mocking.GetNewEmployee().DepartmentId, Is.EqualTo(employee.DepartmentId));
+                Assert.That(EmployeeMocks.GetNewEmployee().Name, Is.EqualTo(employee.Name));
+                Assert.That(EmployeeMocks.GetNewEmployee().JobTitle, Is.EqualTo(employee.JobTitle));
+                Assert.That(EmployeeMocks.GetNewEmployee().ManagerId, Is.EqualTo(employee.ManagerId));
+                Assert.That(EmployeeMocks.GetNewEmployee().HireDate, Is.EqualTo(employee.HireDate));
+                Assert.That(EmployeeMocks.GetNewEmployee().Salary, Is.EqualTo(employee.Salary));
+                Assert.That(EmployeeMocks.GetNewEmployee().Commission, Is.EqualTo(employee.Commission));
+                Assert.That(EmployeeMocks.GetNewEmployee().DepartmentId, Is.EqualTo(employee.DepartmentId));
             });
         }
 
@@ -299,13 +303,14 @@ namespace webapi.Tests
         public void Post_Should_Return_Internal_Error_When_Exception_Raised()
         {
               //Arrange
+             Exception exception = new Exception("An exception has been raised");
             var mockMediator = new Mock<IMediator>();
             mockMediator.Setup(m => m.Send(It.IsAny<AddEmployee>(), default(CancellationToken)))
-                .Throws(new Exception("An exception has been raised"));
+                .Throws(exception);
             var controller = new EmployeeController(mockMediator.Object);
 
             //Act
-            var result = controller.Post(Mocking.GetNewEmployee());
+            var result = controller.Post(EmployeeMocks.GetNewEmployee());
 
             //Assert
             Assert.That(result, Is.Not.Null);
@@ -314,6 +319,7 @@ namespace webapi.Tests
             Assert.That(returnedTask.Result, Is.InstanceOf<ObjectResult>());
             var returnedResult = returnedTask.Result as ObjectResult;
             Assert.That(returnedResult.StatusCode, Is.EqualTo(500));
+            Assert.That(returnedResult.Value, Is.EqualTo(exception.Message));
         }
 
         //TODO: Test cases for Patch(int id, Employee employee)
@@ -327,11 +333,11 @@ namespace webapi.Tests
             //Arrange
             var mockMediator = new Mock<IMediator>();
             mockMediator.Setup(m => m.Send(It.IsAny<UpdateEmployee>(), default(CancellationToken)))
-                .ReturnsAsync(Mocking.GetEmployees()[0]);
+                .ReturnsAsync(EmployeeMocks.GetEmployees()[0]);
             var controller = new EmployeeController(mockMediator.Object);
 
             //Act
-            var result = controller.Patch(Mocking.GetEmployees()[0]);
+            var result = controller.Patch(EmployeeMocks.GetEmployees()[0]);
 
             //Assert
             Assert.That(result, Is.Not.Null);
@@ -345,13 +351,13 @@ namespace webapi.Tests
             {
                 Assert.That(employee, Is.Not.Null);
                 Assert.That(employee.Id, Is.EqualTo(1));
-                Assert.That(Mocking.GetEmployees()[0].Name, Is.EqualTo(employee.Name));
-                Assert.That(Mocking.GetEmployees()[0].JobTitle, Is.EqualTo(employee.JobTitle));
-                Assert.That(Mocking.GetEmployees()[0].ManagerId, Is.EqualTo(employee.ManagerId));
-                Assert.That(Mocking.GetEmployees()[0].HireDate, Is.EqualTo(employee.HireDate));
-                Assert.That(Mocking.GetEmployees()[0].Salary, Is.EqualTo(employee.Salary));
-                Assert.That(Mocking.GetEmployees()[0].Commission, Is.EqualTo(employee.Commission));
-                Assert.That(Mocking.GetEmployees()[0].DepartmentId, Is.EqualTo(employee.DepartmentId));
+                Assert.That(EmployeeMocks.GetEmployees()[0].Name, Is.EqualTo(employee.Name));
+                Assert.That(EmployeeMocks.GetEmployees()[0].JobTitle, Is.EqualTo(employee.JobTitle));
+                Assert.That(EmployeeMocks.GetEmployees()[0].ManagerId, Is.EqualTo(employee.ManagerId));
+                Assert.That(EmployeeMocks.GetEmployees()[0].HireDate, Is.EqualTo(employee.HireDate));
+                Assert.That(EmployeeMocks.GetEmployees()[0].Salary, Is.EqualTo(employee.Salary));
+                Assert.That(EmployeeMocks.GetEmployees()[0].Commission, Is.EqualTo(employee.Commission));
+                Assert.That(EmployeeMocks.GetEmployees()[0].DepartmentId, Is.EqualTo(employee.DepartmentId));
             });
         }
 
@@ -384,7 +390,7 @@ namespace webapi.Tests
             var controller = new EmployeeController(mockMediator.Object);
 
             //Act
-            var result = controller.Patch(Mocking.GetEmployees()[0]);
+            var result = controller.Patch(EmployeeMocks.GetEmployees()[0]);
 
             //Assert
             Assert.That(result, Is.Not.Null);
@@ -397,13 +403,14 @@ namespace webapi.Tests
         public void Patch_Should_Return_Internal_Error_When_Exception_Raised()
         {
             //Arrange
+            Exception exception = new Exception("An exception has been raised");
             var mockMediator = new Mock<IMediator>();
             mockMediator.Setup(m => m.Send(It.IsAny<UpdateEmployee>(), default(CancellationToken)))
-                .Throws(new Exception("An exception has been raised"));
+                .Throws(exception);
             var controller = new EmployeeController(mockMediator.Object);
 
             //Act
-            var result = controller.Patch(Mocking.GetEmployees()[0]);
+            var result = controller.Patch(EmployeeMocks.GetEmployees()[0]);
 
             //Assert
             Assert.That(result, Is.Not.Null);
@@ -412,6 +419,7 @@ namespace webapi.Tests
             Assert.That(returnedTask.Result, Is.InstanceOf<ObjectResult>());
             var returnedResult = returnedTask.Result as ObjectResult;
             Assert.That(returnedResult.StatusCode, Is.EqualTo(500));
+            Assert.That(returnedResult.Value, Is.EqualTo(exception.Message));
         }
     }
 }

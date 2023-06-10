@@ -16,11 +16,18 @@ namespace webapi.Controllers
         }
         [HttpGet]
         [ProducesResponseType(200)]
-        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
         public async Task<IActionResult> Get()
         {
-            var departments = await _mediator.Send(new GetAllDepartments());
-            return Ok(departments);
+            try
+            {
+                var departments = await _mediator.Send(new GetAllDepartments());
+                return Ok(departments);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
     }
 }

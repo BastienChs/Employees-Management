@@ -3,7 +3,7 @@ using webapi.Models;
 
 namespace webapi.Tests.Mock
 {
-    public class Mocking
+    public class EmployeeMocks
     {
         public static List<Employee> GetEmployees()
         {
