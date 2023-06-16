@@ -1,6 +1,7 @@
-﻿using Application.Abstractions;
-using Application.Employees.Commands;
+﻿using Application.Employees.Commands;
 using Domain.Models;
+using Domain.Repositories;
+using Domain.Services.Interfaces;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -12,15 +13,15 @@ namespace Application.Employees.CommandHandlers
 {
     public class AddEmployeeHandler : IRequestHandler<AddEmployee, Employee>
     {
-        private readonly IEmpRepository _employeeRepository;
-        public AddEmployeeHandler(IEmpRepository employeeRepository)
+        private readonly IEmployeeService _employeeService;
+        public AddEmployeeHandler(IEmployeeService employeeService)
         {
-            _employeeRepository = employeeRepository;
+            _employeeService = employeeService;
         }
 
         public Task<Employee> Handle(AddEmployee request, CancellationToken cancellationToken)
         {
-            return _employeeRepository.AddEmployeeAsync(request.employee);
+            return _employeeService.AddEmployeeAsync(request.Employee);
         }
     }
 }

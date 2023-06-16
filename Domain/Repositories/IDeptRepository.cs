@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Abstractions
+namespace Domain.Repositories
 {
     public interface IDeptRepository
     {

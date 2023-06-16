@@ -11,17 +11,17 @@ using System.Threading.Tasks;
 
 namespace Application.Employees.QueryHandlers
 {
-    public class GetEmployeeByIdHandler : IRequestHandler<GetEmployeeById, Employee>
+    public class GetEmployeesByManagerIdHandler : IRequestHandler<GetEmployeesByManagerId, List<Employee>>
     {
         private readonly IEmployeeService _employeeRepository;
-        public GetEmployeeByIdHandler(IEmployeeService employeeRepository)
+        public GetEmployeesByManagerIdHandler(IEmployeeService employeeRepository)
         {
             _employeeRepository = employeeRepository;
         }
 
-        public Task<Employee> Handle(GetEmployeeById request, CancellationToken cancellationToken)
+        public Task<List<Employee>> Handle(GetEmployeesByManagerId request, CancellationToken cancellationToken)
         {
-            return _employeeRepository.GetEmployeeAsync(request.Id);
+            return _employeeRepository.GetEmployeesByManagerIdAsync(request.Id);
         }
     }
 }

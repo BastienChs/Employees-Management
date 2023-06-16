@@ -1,5 +1,5 @@
-﻿using Application.Abstractions;
-using Domain.Models;
+﻿using Domain.Models;
+using Domain.Repositories;
 using Infrastructure.Common;
 using Microsoft.Extensions.Options;
 using MySqlConnector;
@@ -63,6 +63,11 @@ namespace Infrastructure.Repositories
             cmd.CommandText = "SELECT * FROM emp WHERE EMPNO = @id";
             cmd.Parameters.AddWithValue("@id", id);
             var reader = cmd.ExecuteReader();
+            if(!reader.HasRows)
+            {
+                _db.Close();
+                throw new Exception("Employee not found");
+            }
             var employee = new Employee();
             while (reader.Read())
             {
@@ -88,6 +93,33 @@ namespace Infrastructure.Repositories
             var reader = cmd.ExecuteReader();
             var employees = new List<Employee>();
 
+            while (reader.Read())
+            {
+                var employee = new Employee
+                {
+                    Id = reader.GetInt32("EMPNO"),
+                    Name = reader.GetString("ENAME"),
+                    JobTitle = reader.GetString("JOB"),
+                    ManagerId = reader.IsDBNull(reader.GetOrdinal("MGR")) ? null : (int?)reader.GetInt32(reader.GetOrdinal("MGR")),
+                    HireDate = reader.GetDateTime("HIREDATE"),
+                    Salary = reader.GetInt32("SAL"),
+                    Commission = reader.IsDBNull(reader.GetOrdinal("COMM")) ? null : (int?)reader.GetInt32(reader.GetOrdinal("COMM")),
+                    DepartmentId = reader.GetInt32("DEPTNO"),
+                };
+                employees.Add(employee);
+            }
+            _db.Close();
+            return Task.FromResult(employees);
+        }
+
+        public Task<List<Employee>> GetEmployeesByManagerIdAsync(int managerId)
+        {
+            _db.Open();
+            var cmd = _db.CreateCommand();
+            cmd.CommandText = "SELECT * FROM emp WHERE MGR = @managerId";
+            cmd.Parameters.AddWithValue("@managerId", managerId);
+            var reader = cmd.ExecuteReader();
+            var employees = new List<Employee>();
             while (reader.Read())
             {
                 var employee = new Employee

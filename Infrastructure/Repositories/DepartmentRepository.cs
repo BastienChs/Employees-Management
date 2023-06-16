@@ -1,5 +1,5 @@
-﻿using Application.Abstractions;
-using Domain.Models;
+﻿using Domain.Models;
+using Domain.Repositories;
 using Infrastructure.Common;
 using Microsoft.Extensions.Options;
 using MySqlConnector;

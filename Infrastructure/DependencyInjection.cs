@@ -1,4 +1,4 @@
-﻿using Application.Abstractions;
+﻿using Domain.Repositories;
 using Infrastructure.Common;
 using Infrastructure.Repositories;
 using Microsoft.Extensions.Configuration;
@@ -15,6 +15,7 @@ namespace Infrastructure
             services.Configure<EntrepriseDatabaseSettings>(configuration.GetSection(EntrepriseDatabaseSettings.SectionName));
             services.AddScoped<IEmpRepository, EmpRepository>();
             services.AddScoped<IDeptRepository, DeptRepository>();
+            services.AddScoped<IAuthRepository, AuthRepository>();
             return services;
         }
     }

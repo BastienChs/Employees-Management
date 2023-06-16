@@ -1,6 +1,7 @@
-﻿using Application.Abstractions;
-using Application.Employees.Commands;
+﻿using Application.Employees.Commands;
 using Domain.Models;
+using Domain.Repositories;
+using Domain.Services.Interfaces;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -12,8 +13,8 @@ namespace Application.Employees.CommandHandlers
 {
     public class DeleteEmployeeHandler : IRequestHandler<DeleteEmployee, Employee>
     {
-        private readonly IEmpRepository _employeeRepository;
-        public DeleteEmployeeHandler(IEmpRepository employeeRepository)
+        private readonly IEmployeeService _employeeRepository;
+        public DeleteEmployeeHandler(IEmployeeService employeeRepository)
         {
             _employeeRepository = employeeRepository;
         }

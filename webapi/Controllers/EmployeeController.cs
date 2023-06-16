@@ -2,6 +2,7 @@
 using Application.Employees.Queries;
 using Domain.Models;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using webapi.Extensions;
 using webapi.Models;
@@ -71,6 +72,26 @@ namespace webapi.Controllers
             }
         }
 
+        [Authorize]
+        [HttpGet("GetEmployeesByManagerId/{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> GetEmployeesByManagerId(int id)
+        {
+            try
+            {
+                var command = new GetEmployeesByManagerId();
+                command.Id = id;
+                var result = await _mediator.Send(command);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
@@ -106,7 +127,7 @@ namespace webapi.Controllers
                     return BadRequest("Employee is null");
 
                 var command = new AddEmployee();
-                command.employee = employee;
+                command.Employee = employee;
                 var result = await _mediator.Send(command);
                 return CreatedAtAction(nameof(Post), new { id = result.Id }, result);
             }

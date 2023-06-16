@@ -6,11 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Employees.Commands
+namespace Application.Employees.Queries
 {
-    public class AddEmployee : IRequest<Employee>
+    public class GetEmployeesByManagerId : IRequest<List<Employee>>
     {
-        public Employee Employee { get; set; } = new Employee();
-
+        public int Id { get; set;}
     }
 }

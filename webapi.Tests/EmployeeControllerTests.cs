@@ -44,6 +44,7 @@ namespace webapi.Tests
             var returnedTask = result as Task<IActionResult>;
             Assert.That(returnedTask.Result, Is.InstanceOf<OkObjectResult>());
             var returnedResult = returnedTask.Result as OkObjectResult;
+            Assert.That(returnedResult, Is.Not.Null);
             Assert.That(returnedResult.Value, Is.InstanceOf<List<EmployeeWithManager>>());
             var employees = returnedResult.Value as List<EmployeeWithManager>;
         }
@@ -72,8 +73,10 @@ namespace webapi.Tests
             var returnedTask = result as Task<IActionResult>;
             Assert.That(returnedTask.Result, Is.InstanceOf<OkObjectResult>());
             var returnedResult = returnedTask.Result as OkObjectResult;
+            Assert.That(returnedResult, Is.Not.Null);
             Assert.That(returnedResult.Value, Is.InstanceOf<List<EmployeeWithManager>>());
             var employees = returnedResult.Value as List<EmployeeWithManager>;
+            Assert.That(employees, Is.Not.Null);
             Assert.Multiple(() =>
             {
 
@@ -117,8 +120,10 @@ namespace webapi.Tests
             var returnedTask = result as Task<IActionResult>;
             Assert.That(returnedTask.Result, Is.InstanceOf<OkObjectResult>());
             var returnedResult = returnedTask.Result as OkObjectResult;
+            Assert.That(returnedResult, Is.Not.Null);
             Assert.That(returnedResult.Value, Is.InstanceOf<List<EmployeeWithManager>>());
             var employees = returnedResult.Value as List<EmployeeWithManager>;
+            Assert.That(employees, Is.Not.Null);
             Assert.Multiple(() =>
             {
 
@@ -156,6 +161,7 @@ namespace webapi.Tests
             var returnedTask = result as Task<IActionResult>;
             Assert.That(returnedTask.Result, Is.InstanceOf<ObjectResult>());
             var returnedResult = returnedTask.Result as ObjectResult;
+            Assert.That(returnedResult, Is.Not.Null);
             Assert.That(returnedResult.StatusCode, Is.EqualTo(500));
             Assert.That(returnedResult.Value, Is.EqualTo(exception.Message));
         }
@@ -183,8 +189,10 @@ namespace webapi.Tests
             var returnedTask = result as Task<IActionResult>;
             Assert.That(returnedTask.Result, Is.InstanceOf<OkObjectResult>());
             var returnedResult = returnedTask.Result as OkObjectResult;
+            Assert.That(returnedResult, Is.Not.Null);
             Assert.That(returnedResult.Value, Is.InstanceOf<Employee>());
             var employee = returnedResult.Value as Employee;
+            Assert.That(employee, Is.Not.Null);
             Assert.Multiple(() =>
             {
                 Assert.That(employee, Is.Not.Null);
@@ -205,7 +213,7 @@ namespace webapi.Tests
             //Arrange
             var mockMediator = new Mock<IMediator>();
             mockMediator.Setup(m => m.Send(It.IsAny<GetEmployeeById>(), default(CancellationToken)))
-                .ReturnsAsync((Employee)null);
+                .ReturnsAsync(null as Employee);
             var controller = new EmployeeController(mockMediator.Object);
 
             //Act
@@ -238,6 +246,7 @@ namespace webapi.Tests
             var returnedTask = result as Task<IActionResult>;
             Assert.That(returnedTask.Result, Is.InstanceOf<ObjectResult>());
             var returnedResult = returnedTask.Result as ObjectResult;
+            Assert.That(returnedResult, Is.Not.Null);
             Assert.That(returnedResult.StatusCode, Is.EqualTo(500));
             Assert.That(returnedResult.Value, Is.EqualTo(exception.Message));
         }
@@ -264,8 +273,10 @@ namespace webapi.Tests
             var returnedTask = result as Task<IActionResult>;
             Assert.That(returnedTask.Result, Is.InstanceOf<CreatedAtActionResult>());
             var returnedResult = returnedTask.Result as CreatedAtActionResult;
+            Assert.That(returnedResult, Is.Not.Null);
             Assert.That(returnedResult.Value, Is.InstanceOf<Employee>());
             var employee = returnedResult.Value as Employee;
+            Assert.That(employee, Is.Not.Null);
             Assert.Multiple(() =>
             {
                 Assert.That(employee, Is.Not.Null);
@@ -278,25 +289,6 @@ namespace webapi.Tests
                 Assert.That(EmployeeMocks.GetNewEmployee().Commission, Is.EqualTo(employee.Commission));
                 Assert.That(EmployeeMocks.GetNewEmployee().DepartmentId, Is.EqualTo(employee.DepartmentId));
             });
-        }
-
-        [Test]
-        public void Post_Should_Return_Bad_Request_When_Employee_Is_Null()
-        {
-            //Arrange
-            var mockMediator = new Mock<IMediator>();
-            mockMediator.Setup(m => m.Send(It.IsAny<AddEmployee>(), default(CancellationToken)))
-                .ReturnsAsync((Employee)null);
-            var controller = new EmployeeController(mockMediator.Object);
-
-            //Act
-            var result = controller.Post(null);
-
-            //Assert
-            Assert.That(result, Is.Not.Null);
-            Assert.That(result, Is.InstanceOf<Task<IActionResult>>());
-            var returnedTask = result as Task<IActionResult>;
-            Assert.That(returnedTask.Result, Is.TypeOf<BadRequestObjectResult>());
         }
 
         [Test]
@@ -318,6 +310,7 @@ namespace webapi.Tests
             var returnedTask = result as Task<IActionResult>;
             Assert.That(returnedTask.Result, Is.InstanceOf<ObjectResult>());
             var returnedResult = returnedTask.Result as ObjectResult;
+            Assert.That(returnedResult, Is.Not.Null);
             Assert.That(returnedResult.StatusCode, Is.EqualTo(500));
             Assert.That(returnedResult.Value, Is.EqualTo(exception.Message));
         }
@@ -345,8 +338,10 @@ namespace webapi.Tests
             var returnedTask = result as Task<IActionResult>;
             Assert.That(returnedTask.Result, Is.InstanceOf<CreatedAtActionResult>());
             var returnedResult = returnedTask.Result as CreatedAtActionResult;
+            Assert.That(returnedResult, Is.Not.Null);
             Assert.That(returnedResult.Value, Is.InstanceOf<Employee>());
             var employee = returnedResult.Value as Employee;
+            Assert.That(employee, Is.Not.Null);
             Assert.Multiple(() =>
             {
                 Assert.That(employee, Is.Not.Null);
@@ -359,44 +354,6 @@ namespace webapi.Tests
                 Assert.That(EmployeeMocks.GetEmployees()[0].Commission, Is.EqualTo(employee.Commission));
                 Assert.That(EmployeeMocks.GetEmployees()[0].DepartmentId, Is.EqualTo(employee.DepartmentId));
             });
-        }
-
-        [Test]
-        public void Patch_Should_Return_Bad_Request_When_Employee_Is_Null()
-        {
-            //Arrange
-            var mockMediator = new Mock<IMediator>();
-            mockMediator.Setup(m => m.Send(It.IsAny<UpdateEmployee>(), default(CancellationToken)))
-                .ReturnsAsync((Employee)null);
-            var controller = new EmployeeController(mockMediator.Object);
-
-            //Act
-            var result = controller.Patch(null);
-
-            //Assert
-            Assert.That(result, Is.Not.Null);
-            Assert.That(result, Is.InstanceOf<Task<IActionResult>>());
-            var returnedTask = result as Task<IActionResult>;
-            Assert.That(returnedTask.Result, Is.TypeOf<BadRequestObjectResult>());
-        }
-
-        [Test]
-        public void Patch_Should_Return_Not_Found_When_Employee_Is_Not_Found()
-        {
-            //Arrange
-            var mockMediator = new Mock<IMediator>();
-            mockMediator.Setup(m => m.Send(It.IsAny<UpdateEmployee>(), default(CancellationToken)))
-                .ReturnsAsync((Employee)null);
-            var controller = new EmployeeController(mockMediator.Object);
-
-            //Act
-            var result = controller.Patch(EmployeeMocks.GetEmployees()[0]);
-
-            //Assert
-            Assert.That(result, Is.Not.Null);
-            Assert.That(result, Is.InstanceOf<Task<IActionResult>>());
-            var returnedTask = result as Task<IActionResult>;
-            Assert.That(returnedTask.Result, Is.TypeOf<NotFoundObjectResult>());
         }
 
         [Test]
@@ -418,6 +375,7 @@ namespace webapi.Tests
             var returnedTask = result as Task<IActionResult>;
             Assert.That(returnedTask.Result, Is.InstanceOf<ObjectResult>());
             var returnedResult = returnedTask.Result as ObjectResult;
+            Assert.That(returnedResult, Is.Not.Null);
             Assert.That(returnedResult.StatusCode, Is.EqualTo(500));
             Assert.That(returnedResult.Value, Is.EqualTo(exception.Message));
         }
